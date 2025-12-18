@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn Tập Tin Học 12</title>
+    <style>
+        body { font-family: sans-serif; background: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
+        .quiz-container { background: white; max-width: 600px; width: 100%; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .stats { display: flex; justify-content: space-between; color: #666; margin-bottom: 10px; }
+        .question { font-size: 1.2rem; font-weight: bold; margin-bottom: 20px; }
+        .option { padding: 12px; border: 2px solid #eee; margin: 10px 0; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+        .option:hover { background: #f9f9f9; border-color: #007bff; }
+        .correct { background: #d4edda; border-color: #28a745; color: #155724; font-weight: bold; }
+        .wrong { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+        .disabled { pointer-events: none; }
+        #next-btn { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 8px; cursor: pointer; display: none; font-size: 1rem; }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="stats">
+            <span id="progress">Đang nạp...</span>
+            <span id="score">Đúng: 0</span>
+        </div>
+        <div id="quiz-box">
+            <div class="question" id="q-text">Vui lòng chờ dữ liệu...</div>
+            <div id="options"></div>
+        </div>
+        <button id="next-btn" onclick="nextQuestion()">Câu tiếp theo ➜</button>
+    </div>
+
+    <script>
+        let questions = [];
+        let currentIdx = 0;
+        let score = 0;
+
+        async function loadQuiz() {
+            try {
+                const res = await fetch('questions.json');
+                questions = await res.json();
+                questions.sort(() => Math.random() - 0.5);
+                showQuestion();
+            } catch (e) {
+                document.getElementById('q-text').innerText = "Lỗi nạp file questions.json!";
+            }
+        }
+
+        function showQuestion() {
+            const q = questions[currentIdx];
+            document.getElementById('progress').innerText = `Câu ${currentIdx + 1}/${questions.length}`;
+            document.getElementById('q-text').innerText = q.q;
+            const optContainer = document.getElementById('options');
+            optContainer.innerHTML = '';
+
+            q.a.forEach((text, i) => {
+                const div = document.createElement('div');
+                div.className = 'option';
+                div.innerText = text;
+                div.onclick = () => check(div, i, q.c);
+                optContainer.appendChild(div);
+            });
+            document.getElementById('next-btn').style.display = 'none';
+        }
+
+        function check(el, selected, correct) {
+            const all = document.querySelectorAll('.option');
+            all.forEach(o => o.classList.add('disabled'));
+            if(selected === correct) {
+                el.classList.add('correct');
+                score++;
+                document.getElementById('score').innerText = `Đúng: ${score}`;
+            } else {
+                el.classList.add('wrong');
+                all[correct].classList.add('correct');
+            }
+            document.getElementById('next-btn').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            currentIdx++;
+            if(currentIdx < questions.length) showQuestion();
+            else alert("Kết thúc! Điểm của bạn: " + score);
+        }
+
+        loadQuiz();
+    </script>
+</body>
+</html>
