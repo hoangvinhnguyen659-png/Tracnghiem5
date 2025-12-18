@@ -1,11 +1,7 @@
-name = "trac-nghiem-online"
+name = "trac-nghiem-tin-12"
 main = "src/index.js"
 compatibility_date = "2024-03-01"
 
-# Cấu hình thư mục chứa file tĩnh (HTML, JSON)
 [assets]
 directory = "./public"
 binding = "ASSETS"
-
-[observability]
-enabled = true
