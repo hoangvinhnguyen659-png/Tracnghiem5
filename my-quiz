@@ -1,0 +1,7 @@
+my-quiz/
+├── wrangler.toml        (File cấu hình Cloudflare)
+├── src/
+│   └── index.js         (File xử lý logic Worker)
+└── public/
+    ├── index.html       (Giao diện sườn)
+    └── questions.json   (Dữ liệu 120 câu hỏi)
