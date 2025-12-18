@@ -1,0 +1,17 @@
+[
+  {
+    "q": "Thuật ngữ 'Trí tuệ nhân tạo' (AI) chính thức được đưa ra tại sự kiện nào?",
+    "a": ["Phép thử Turing (1950)", "Hội thảo Dartmouth (1956)", "Hệ chuyên gia MYCIN (1970)", "Robot Sophia (2016)"],
+    "c": 1
+  },
+  {
+    "q": "Youtube tự động đề xuất video dựa trên lịch sử xem thể hiện đặc trưng nào?",
+    "a": ["Khả năng suy luận", "Khả năng nhận thức", "Khả năng học", "Khả năng vận động"],
+    "c": 2
+  },
+  {
+    "q": "Thẻ nào được dùng để tạo một danh sách thả xuống?",
+    "a": ["<list>", "<dropdown>", "<select>", "<option>"],
+    "c": 2
+  }
+]
